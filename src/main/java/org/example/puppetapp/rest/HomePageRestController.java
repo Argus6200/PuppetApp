@@ -12,7 +12,7 @@ public class HomePageRestController {
 
     @GetMapping("/")
     public String sayHello(){
-        return "Hello World";
+        return "Index.html";
     }
 
     @GetMapping("/teaminfo")
