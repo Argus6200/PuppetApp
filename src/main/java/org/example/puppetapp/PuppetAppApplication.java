@@ -1,5 +1,7 @@
 package org.example.puppetapp;
 
+import org.example.puppetapp.dao.SongDAO;
+import org.example.puppetapp.entity.Song;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,11 +16,18 @@ public class PuppetAppApplication {
 
 
     @Bean
-    public CommandLineRunner clr(String[] args){
+    public CommandLineRunner clr(SongDAO SongDAO){
 
     return runner -> {
-
-        System.out.println("Hello");
+        createSong(SongDAO);
         };
+    }
+
+    private void createSong(SongDAO songDAO) {
+
+        Song tempSong = new Song("His love will go on","My heart will go on", "Spotlight");
+        songDAO.save(tempSong);
+
+        System.out.println("Song Id: " + tempSong.getId());
     }
 }
