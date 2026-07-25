@@ -19,14 +19,25 @@ public class PuppetAppApplication {
     public CommandLineRunner clr(SongDAO SongDAO){
 
     return runner -> {
+        //CLR for creating the song
         createSong(SongDAO);
+
+        //CLR for querying for a song
+        //readSong(SongDAO);
         };
+    }
+
+    private void readSong(SongDAO songDAO) {
+
     }
 
     private void createSong(SongDAO songDAO) {
 
         Song tempSong = new Song("His love will go on","My heart will go on", "Spotlight");
+
         songDAO.save(tempSong);
+
+        System.out.println(tempSong);
 
         System.out.println("Song Id: " + tempSong.getId());
     }

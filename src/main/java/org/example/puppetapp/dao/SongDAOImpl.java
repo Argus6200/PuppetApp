@@ -18,10 +18,15 @@ public class SongDAOImpl implements SongDAO{
     }
 
 
-
+    // svaes theSong to the Song table
     @Override
     @Transactional
     public void save(Song theSong) {
         entityManager.persist(theSong);
+    }
+    //queries the Song table for the ID and returns the Song object
+    @Override
+    public Song findbyId(Integer id) {
+        return entityManager.find(Song.class, id);
     }
 }

@@ -1,3 +1,13 @@
+
+
+
+7/25/2026:
+
+Change requests to scope include adding a public home page for outside parties to contact the team regarding shows.
+The change was requested by the key stakeholder for the purpose of increasing availability of outside parties to contact the team regarding performances.
+
+6/2026
+
 Puppet app for the Followers of God Puppet Team to help with coordinating positions and making every member
 an expert of their position.
 
