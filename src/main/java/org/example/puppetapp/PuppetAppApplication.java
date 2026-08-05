@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class PuppetAppApplication {
 
@@ -20,11 +22,23 @@ public class PuppetAppApplication {
 
     return runner -> {
         //CLR for creating the song
-        createSong(SongDAO);
+        //createSong(SongDAO);
 
         //CLR for querying for a song
         //readSong(SongDAO);
+
+        //query
+        queryForSongs(SongDAO);
         };
+    }
+
+    private void queryForSongs(SongDAO songDAO) {
+
+        List<Song> allSongs = songDAO.findAll();
+
+        for(Song song : allSongs){
+            System.out.println(song);
+        }
     }
 
     private void readSong(SongDAO songDAO) {
