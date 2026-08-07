@@ -19,7 +19,6 @@ public class SongDAOImpl implements SongDAO{
         this.entityManager = entityManager;
     }
 
-
     // svaes theSong to the Song table
     @Override
     @Transactional
@@ -38,6 +37,34 @@ public class SongDAOImpl implements SongDAO{
     public List<Song> findAll() {
         TypedQuery<Song> theQuery = entityManager.createQuery("FROM Song", Song.class);
         return theQuery.getResultList();
+    }
+
+    @Override
+    public List<Song> findBySongName(String theSongName) {
+        TypedQuery<Song> theQuery = entityManager.createQuery("FROM Song WHERE songName=:theData", Song.class);
+
+        theQuery.setParameter("theData", theSongName);
+        return theQuery.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public void updateSong(Song theSong) {
+        entityManager.merge(theSong);
+    }
+
+    @Override
+    @Transactional
+    public void deleteSong(int Id) {
+        Song theSong = entityManager.find(Song.class, Id);
+        entityManager.remove(theSong);
+    }
+
+    @Override
+    @Transactional
+    public int deleteAllSongs(){
+        int numDeleted = entityManager.createQuery("DELETE FROM Song").executeUpdate();
+        return numDeleted;
     }
 
 }

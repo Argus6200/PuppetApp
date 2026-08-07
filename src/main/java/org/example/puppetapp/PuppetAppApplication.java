@@ -21,15 +21,49 @@ public class PuppetAppApplication {
     public CommandLineRunner clr(SongDAO SongDAO){
 
     return runner -> {
-        //CLR for creating the song
+
         //createSong(SongDAO);
 
-        //CLR for querying for a song
         //readSong(SongDAO);
 
-        //query
-        queryForSongs(SongDAO);
+        //queryForSongs(SongDAO);
+
+        //findBySongName(SongDAO);
+
+        //updateSong(SongDAO);
+
+        //deleteSong(SongDAO);
+
+        //deleteAllSongs(SongDAO);
         };
+    }
+
+    private void deleteAllSongs(SongDAO songDAO){
+        int num = songDAO.deleteAllSongs();
+        System.out.println("Num Rows Deleted: " + num);
+    }
+
+    private void deleteSong(SongDAO songDAO) {
+        int Id = 1;
+        songDAO.deleteSong(Id);
+
+    }
+
+    private void updateSong(SongDAO songDAO) {
+        int id = 1;
+        Song theSong = songDAO.findById(id);
+
+        theSong.setSongName("The Best Song");
+
+        songDAO.updateSong(theSong);
+
+        System.out.println(theSong);
+
+    }
+
+    private void findBySongName(SongDAO songDAO) {
+
+    List<Song> theSong = songDAO.findBySongName("His Love Will go on");
     }
 
     private void queryForSongs(SongDAO songDAO) {

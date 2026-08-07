@@ -14,4 +14,12 @@ public interface SongDAO {
 
     //Interface method for querying for all SQL objects
     List<Song> findAll();
+
+    List<Song> findBySongName(String theSongName);
+
+    void updateSong(Song theSong);
+
+    void deleteSong(int Id);
+
+    int deleteAllSongs();
 }
