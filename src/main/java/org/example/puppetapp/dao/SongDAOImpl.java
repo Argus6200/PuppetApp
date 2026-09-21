@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class SongDAOImpl implements SongDAO{
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public SongDAOImpl(EntityManager entityManager) {

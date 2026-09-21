@@ -9,19 +9,15 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Song {
+public class Performer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String originalSongName;
-    private String songName;
-    private String lightType;
+    private String name;
+    private String permissionLevel;
 
-    @OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "performer")
     private Set<Part> parts = new HashSet<>();
-
-    @ManyToMany(mappedBy = "songs")
-    private Set<Show> shows = new HashSet<>();
 }

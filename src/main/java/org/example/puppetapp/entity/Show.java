@@ -1,32 +1,30 @@
 package org.example.puppetapp.entity;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "performance_show")
+@Getter
+@Setter
 public class Show {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String location;
-    private int numberOfSongs;
+    private LocalDate date;
 
-    public Show(){
-
-    }
-
-    public Show(String location, int numberOfSongs) {
-        this.location = location;
-        this.numberOfSongs = numberOfSongs;
-    }
-
-    public int getNumberOfSongs() {
-        return numberOfSongs;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setNumberOfSongs(int numberOfSongs) {
-        this.numberOfSongs = numberOfSongs;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "show_song",
+            joinColumns = @JoinColumn(name = "show_id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id")
+    )
+    private Set<Song> songs = new HashSet<>();
 }
