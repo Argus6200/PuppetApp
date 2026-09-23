@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Songs</title>
+</head>
+<body>
+
+<h1>Songs</h1>
+
+<div id="songs"></div>
+
+<script>
+    fetch('/api/songs')
+        .then(response => response.json())
+        .then(songs => {
+            songs.forEach(song => {
+                document.getElementById("songs").innerHTML += `
+                    <h2>${song.originalSongName}</h2>
+                    <p>${song.songName}</p>
+                    <p>${song.lightType}</p>
+                `;
+            });
+        });
+</script>
+<h1 id = "song"></h1>
+
+</body>
+</html>

@@ -24,4 +24,13 @@ public class Song {
 
     @ManyToMany(mappedBy = "songs")
     private Set<Show> shows = new HashSet<>();
+
+    public Song(String originalSongName, String songName, String lightType) {
+        this.originalSongName = originalSongName;
+        this.songName = songName;
+        this.lightType = lightType;
+    }
+
+    public Song() {
+    }
 }

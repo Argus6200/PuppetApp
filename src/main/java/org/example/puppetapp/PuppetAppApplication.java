@@ -1,6 +1,10 @@
 package org.example.puppetapp;
 
+import org.example.puppetapp.dao.ShowDAO;
+import org.example.puppetapp.dao.ShowSongDAO;
 import org.example.puppetapp.dao.SongDAO;
+import org.example.puppetapp.entity.Show;
+import org.example.puppetapp.entity.ShowSong;
 import org.example.puppetapp.entity.Song;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -37,6 +41,40 @@ public class PuppetAppApplication {
         //deleteAllSongs(SongDAO);
         };
     }
+    @Bean
+    public CommandLineRunner ShowSongclr(ShowSongDAO ShowSongDAO){
+
+        return runner -> {
+            getShowSongs(ShowSongDAO);
+        };
+    }
+    @Bean
+    public CommandLineRunner Showclr(ShowDAO ShowDAO){
+
+        return runner -> {
+            getShowById(ShowDAO);
+
+        };
+    }
+
+    private void getShowById(ShowDAO showDAO){
+
+        Show showResult = showDAO.getShowById(1);
+
+        System.out.println(showResult.getLocation() + " " + showResult.getDate());
+
+    }
+
+    private void getShowSongs(ShowSongDAO ShowSongDAO){
+
+        List<ShowSong> songs = ShowSongDAO.getShowSongs(1);
+
+        for  (ShowSong showSong : songs) {
+            Song song = showSong.getSong();
+            Show show = showSong.getShow();
+            System.out.println(song.getSongName() + ": " + show.getId() +" order: "+ showSong.getShowOrder());
+        }
+    }
 
     private void deleteAllSongs(SongDAO songDAO){
         int num = songDAO.deleteAllSongs();
@@ -71,7 +109,7 @@ public class PuppetAppApplication {
         List<Song> allSongs = songDAO.findAll();
 
         for(Song song : allSongs){
-            System.out.println(song);
+            System.out.println(song.getSongName() + " " + song.getId() + " " + song.getLightType());
         }
     }
 
