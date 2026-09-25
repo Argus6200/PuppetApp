@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show</title>
+</head>
+<body>
+
+<h1 id = "showH"></h1>
+
+<div id="show"></div>
+<div id="song"></div>
+
+<script>
+    fetch(`/api${window.location.pathname}`)
+        .then(response => response.json())
+        .then(showResponse => {document.getElementById("show").innerHTML += `
+        <p>${showResponse.show.location}</p>
+        <p>${showResponse.show.date}</p>`;
+            showResponse.songs.forEach(song => document.getElementById("song").innerHTML += `
+            <p>${song.songName}</p>`)
+        })
+    ;
+</script>
+
+</body>
+
+<footer><a href = "http://localhost:8080/shows">Back</a></footer>
+</html>

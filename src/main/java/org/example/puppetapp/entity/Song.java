@@ -19,11 +19,9 @@ public class Song {
     private String songName;
     private String lightType;
 
-    @OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Part> parts = new HashSet<>();
+    //@OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private Set<Part> parts = new HashSet<>();
 
-    @ManyToMany(mappedBy = "songs")
-    private Set<Show> shows = new HashSet<>();
 
     public Song(String originalSongName, String songName, String lightType) {
         this.originalSongName = originalSongName;

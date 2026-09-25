@@ -6,6 +6,8 @@ import org.example.puppetapp.entity.Show;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ShowDAOImpl implements ShowDAO {
 
@@ -23,5 +25,12 @@ public class ShowDAOImpl implements ShowDAO {
         query.setParameter("showId", showId);
 
         return query.getSingleResult();
+    }
+
+    public List<Show> getAllShows() {
+
+        TypedQuery<Show> query = entityManager.createQuery("from Show", Show.class);
+
+        return query.getResultList();
     }
 }

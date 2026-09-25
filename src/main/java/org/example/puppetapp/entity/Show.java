@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "performance_show")
@@ -20,6 +18,7 @@ public class Show {
     private String location;
     private LocalDate date;
 
+    /*
     @ManyToMany
     @JoinTable(
             name = "show_song",
@@ -27,4 +26,5 @@ public class Show {
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
     private Set<Song> songs = new HashSet<>();
+    */
 }
