@@ -1,5 +1,14 @@
+9/25/2026:
 
-
+The database Has been implemented and primed with test data. Entities have been
+created and linked to the database. most entities now have Data access object implementations
+Currently the Data base has 5 tables (Part, performance_show, performer, show_song, song).
+The only tables in use are performance_show, show_song, and song. Show gives the ability
+to display all show dates and locations. The Song table gives the ability to show all song
+titles, and original_titles, These two tables are paired together in a many-many relationship
+with the join table of show_song. Show_song, maps the reusable songs to their respective show, and when 
+querying for a specific show the show_id is used against show_song to retrieve all song_id's for that
+given show.
 
 7/25/2026:
 
