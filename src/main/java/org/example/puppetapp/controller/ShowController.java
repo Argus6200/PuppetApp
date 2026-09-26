@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ShowController {
 
-    @GetMapping("/shows")
+    @GetMapping("/puppetmaster/shows")
     public String showsPage() {
         return "shows";
     }
 
-    @GetMapping("/show/{id}")
+    @GetMapping("/puppetmaster/show/{id}")
     public String showPage(){
         return "show";
     }

@@ -18,6 +18,6 @@ public class Performer {
     private String name;
     private String permissionLevel;
 
-    @OneToMany(mappedBy = "performer")
-    private Set<Part> parts = new HashSet<>();
+    //@OneToMany(mappedBy = "performer")
+    //private Set<Part> parts = new HashSet<>();
 }

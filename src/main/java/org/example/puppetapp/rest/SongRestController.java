@@ -18,7 +18,7 @@ public class SongRestController {
         this.SongDAO = SongDAO;
     }
 
-    @GetMapping("/songs")
+    @GetMapping("/puppetmaster/songs")
     public List<Song> getSongs(){
 
         return SongDAO.findAll();

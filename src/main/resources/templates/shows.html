@@ -10,18 +10,18 @@
 <div id="shows"></div>
 
 <script>
-    fetch('/api/shows')
+    fetch('/api/puppetmaster/shows')
         .then(response => response.json())
         .then(shows => {
             console.log(shows);
             shows.forEach(show => {
                 document.getElementById("shows").innerHTML += `
-                    <a href="/show/${show.id}"><h2>${show.location}</h2></a>
+                    <a href="/puppetmaster/show/${show.id}"><h2>${show.location}</h2></a>
                     <p>${show.date}</p>
                 `;
             });
         });
 </script>
 </body>
-<footer><a href = "http://localhost:8080">Home</a></footer>
+<footer><a href = "http://localhost:8080/puppetmaster">Home</a></footer>
 </html>

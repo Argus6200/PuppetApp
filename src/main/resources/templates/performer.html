@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show</title>
+</head>
+<body>
+
+<h1 id = "showH"></h1>
+
+<div id="performer"></div>
+
+<script>
+    fetch(`/api${window.location.pathname}`)
+        .then(response => response.json())
+        .then(Performer => {document.getElementById("performer").innerHTML += `
+        <p>${Performer.name}</p>
+        <p>${Performer.permissionLevel}</p>`;
+        })
+    ;
+</script>
+
+</body>
+
+<footer><a href = "http://localhost:8080/puppetmaster">Back</a></footer>
+</html>

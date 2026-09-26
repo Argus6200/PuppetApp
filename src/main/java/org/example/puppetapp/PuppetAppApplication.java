@@ -16,7 +16,7 @@ import java.util.List;
 @SpringBootApplication
 public class PuppetAppApplication {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         SpringApplication.run(PuppetAppApplication.class, args);
     }
 

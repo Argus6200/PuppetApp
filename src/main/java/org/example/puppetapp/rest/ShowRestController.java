@@ -16,7 +16,6 @@ import java.util.List;
 public class ShowRestController {
 
     private final ShowDAO showDAO;
-
     private final ShowSongDAO showSongDAO;
 
     public ShowRestController(ShowDAO showDAO,  ShowSongDAO showSongDAO) {
@@ -24,13 +23,13 @@ public class ShowRestController {
         this.showSongDAO = showSongDAO;
     }
 
-    @GetMapping("/shows")
+    @GetMapping("/puppetmaster/shows")
     public List<Show> getShows() {
 
         return showDAO.getAllShows();
     }
 
-    @GetMapping("/show/{showid}")
+    @GetMapping("/puppetmaster/show/{showid}")
     public ShowResponse getShowById(@PathVariable int showid) {
         Show show = showDAO.getShowById(showid);
 

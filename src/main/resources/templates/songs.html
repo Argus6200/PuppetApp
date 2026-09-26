@@ -10,7 +10,7 @@
 <div id="songs"></div>
 
 <script>
-    fetch('/api/songs')
+    fetch('/api/puppetmaster/songs')
         .then(response => response.json())
         .then(songs => {
             songs.forEach(song => {
@@ -26,5 +26,5 @@
 
 </body>
 
-<footer><a href = "http://localhost:8080">Back Home</a></footer>
+<footer><a href = "http://localhost:8080/puppetmaster">Back Home</a></footer>
 </html>
