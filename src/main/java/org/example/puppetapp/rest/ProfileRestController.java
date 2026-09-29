@@ -16,10 +16,8 @@ public class ProfileRestController {
     }
 
     @GetMapping("/puppetmaster/performer/{performerId}")
-    public Performer getPerformer(@PathVariable int  performerId) {
-        Performer performer = performerDAO.getPerformerById(performerId);
-
-        return performer;
+    public Performer getPerformer(@PathVariable int performerId) {
+        return performerDAO.getPerformerById(performerId);
     }
 
 }

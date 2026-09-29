@@ -23,15 +23,10 @@ public class Part {
     @JoinColumn(name = "song_id", nullable = false)
     private Song song;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "performer_id", nullable = true)
-    private Performer performer;
-
-    public Part(String puppetPosition, String stageLocation, String notes, Performer performer) {
+    public Part(String puppetPosition, String stageLocation, String notes) {
         this.puppetPosition = puppetPosition;
         this.stageLocation = stageLocation;
         this.notes = notes;
-        this.performer = performer;
     }
 
     public Part() {

@@ -1,11 +1,10 @@
 package org.example.puppetapp;
 
+import org.example.puppetapp.dao.PartAssignmentDAO;
 import org.example.puppetapp.dao.ShowDAO;
 import org.example.puppetapp.dao.ShowSongDAO;
 import org.example.puppetapp.dao.SongDAO;
-import org.example.puppetapp.entity.Show;
-import org.example.puppetapp.entity.ShowSong;
-import org.example.puppetapp.entity.Song;
+import org.example.puppetapp.entity.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,31 +41,54 @@ public class PuppetAppApplication {
         };
     }
     @Bean
-    public CommandLineRunner ShowSongclr(ShowSongDAO ShowSongDAO){
+    public CommandLineRunner ShowSongclr(ShowSongDAO showSongDAO){
 
         return runner -> {
-            getShowSongs(ShowSongDAO);
+            getShowSongs(showSongDAO);
         };
     }
     @Bean
-    public CommandLineRunner Showclr(ShowDAO ShowDAO){
+    public CommandLineRunner Showclr(ShowDAO showDAO){
 
         return runner -> {
-            getShowById(ShowDAO);
+            getShowById(showDAO);
+
+        };
+    }
+    @Bean
+    public CommandLineRunner partAssignmentclr(PartAssignmentDAO partAssignmentDAO) {
+
+        return runner -> {
+
+            findPAById(partAssignmentDAO);
 
         };
     }
 
-    private void getShowById(ShowDAO showDAO){
+    private void findPAById(PartAssignmentDAO partAssignmentDAO) {
+        System.out.println("Begin findPAById");
+        PartAssignmentId partId = new PartAssignmentId(1, 1);
 
+        PartAssignment response = partAssignmentDAO.findPAById(partId);
+
+        System.out.println(response.getShow().getLocation() + "\n" +
+                response.getShow().getDate() + "\n" +
+                response.getPerformer().getName() + "\n" +
+                response.getPart().getSong().getSongName() + "\n" +
+                response.getPart().getNotes());
+        System.out.println("End findPAById\n");
+    }
+
+    private void getShowById(ShowDAO showDAO){
+        System.out.println("Begin getShowById");
         Show showResult = showDAO.getShowById(1);
 
         System.out.println(showResult.getLocation() + " " + showResult.getDate());
-
+        System.out.println("End getShowById\n");
     }
 
     private void getShowSongs(ShowSongDAO ShowSongDAO){
-
+        System.out.println("Begin getShowSongs");
         List<ShowSong> songs = ShowSongDAO.getShowSongs(1);
 
         for  (ShowSong showSong : songs) {
@@ -74,6 +96,7 @@ public class PuppetAppApplication {
             Show show = showSong.getShow();
             System.out.println(song.getSongName() + ": " + show.getId() +" order: "+ showSong.getShowOrder());
         }
+        System.out.println("End getShowSongs\n");
     }
 
     private void deleteAllSongs(SongDAO songDAO){
