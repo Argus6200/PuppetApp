@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang = "en">
 <head>
     <title>Puppet Master Home</title>
 </head>
@@ -28,7 +28,9 @@
 
                     show.assignments.forEach(assignment => {
                     if(assignment.part.song.id === song.id){
-                    songHTML += `<div class = "assignment">${assignment.part.puppetPosition}</div>`
+                    songHTML += `<div class = "assignment">${assignment.part.puppetPosition}</div>` +
+                        `<div class = "stageLocation">${assignment.part.stageLocation}</div>` +
+                        `<div class = "notes">${assignment.part.notes}</div>`
                 }
                 });
                 songHTML += `</div>`;

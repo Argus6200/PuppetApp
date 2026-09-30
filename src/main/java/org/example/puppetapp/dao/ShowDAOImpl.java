@@ -19,26 +19,21 @@ public class ShowDAOImpl implements ShowDAO {
     }
 
     public Show getShowById(int showId) {
-
         TypedQuery<Show> query = entityManager.createQuery("from Show s where s.id = :showId", Show.class);
-
         query.setParameter("showId", showId);
 
         return query.getSingleResult();
     }
 
     public List<Show> getAllShows() {
-
-        TypedQuery<Show> query = entityManager.createQuery("from Show", Show.class);
+        TypedQuery<Show> query = entityManager.createQuery("FROM Show", Show.class);
 
         return query.getResultList();
     }
 
     public Show findNextShow(){
-
         TypedQuery<Show> query = entityManager.createQuery("SELECT s FROM Show s WHERE s.date >= CURRENT_DATE ORDER BY s.date ASC",
                 Show.class);
-
         query.setMaxResults(1);
 
         return query.getSingleResult();
