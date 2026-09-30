@@ -63,8 +63,7 @@ public class SongDAOImpl implements SongDAO{
     @Override
     @Transactional
     public int deleteAllSongs(){
-        int numDeleted = entityManager.createQuery("DELETE FROM Song").executeUpdate();
-        return numDeleted;
+        return entityManager.createQuery("DELETE FROM Song").executeUpdate();
     }
 
 }

@@ -7,6 +7,8 @@ import org.example.puppetapp.entity.PartAssignmentId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class PartAssignmentDAOImpl implements PartAssignmentDAO {
 
@@ -18,5 +20,19 @@ public class PartAssignmentDAOImpl implements PartAssignmentDAO {
     @Override
     public PartAssignment findPAById(PartAssignmentId id) {
         return entityManager.find(PartAssignment.class, id);
+    }
+
+    @Override
+    public List<PartAssignment> findPartAssignmentByShowAndPerformerId(int showId, int performerId) {
+
+        TypedQuery<PartAssignment> query = entityManager.createQuery(
+                "SELECT p FROM PartAssignment p WHERE p.show.id = :theShowId AND p.performer.id = :thePerformerId",
+                PartAssignment.class);
+
+        query.setParameter("theShowId", showId);
+        query.setParameter("thePerformerId", performerId);
+
+        return query.getResultList();
+
     }
 }

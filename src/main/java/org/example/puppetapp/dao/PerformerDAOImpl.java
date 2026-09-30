@@ -6,8 +6,6 @@ import org.example.puppetapp.entity.Performer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public class PerformerDAOImpl implements PerformerDAO {
 
@@ -23,9 +21,5 @@ public class PerformerDAOImpl implements PerformerDAO {
         query.setParameter("performer", id);
 
         return query.getSingleResult();
-    }
-
-    public List<Performer> getPerformers() {
-        return List.of();
     }
 }

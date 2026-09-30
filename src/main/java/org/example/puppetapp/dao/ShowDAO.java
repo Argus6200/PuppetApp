@@ -9,4 +9,6 @@ public interface ShowDAO {
     Show getShowById(int showId);
 
     List<Show> getAllShows();
+
+    Show findNextShow();
 }

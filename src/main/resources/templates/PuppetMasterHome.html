@@ -5,7 +5,38 @@
 </head>
 <body>
 
+<h1>Puppet Master Home</h1>
+
 <a href = "http://localhost:8080/puppetmaster/shows"><h2>Shows</h2></a>
 <a href = "http://localhost:8080/puppetmaster/songs"><h2>Songs</h2></a>
+
+<div id = "NSLocation"></div>
+<div id = "NSDate"></div>
+<div id = "songs"></div>
+
+
+<script>
+    fetch('/api/puppetmaster')
+        .then(response => response.json())
+        .then(show => {
+            document.getElementById('NSLocation').innerHTML += `<div>${show.show.show.location}</div>`;
+            document.getElementById('NSDate').innerHTML += `<div>${show.show.show.date}</div>`;
+            show.show.songs.forEach(song => {
+
+                let songHTML = `<div class = "Song">
+                    <h2>${song.songName}</h2>`;
+
+                    show.assignments.forEach(assignment => {
+                    if(assignment.part.song.id === song.id){
+                    songHTML += `<div class = "assignment">${assignment.part.puppetPosition}</div>`
+                }
+                });
+                songHTML += `</div>`;
+
+                document.getElementById('songs').innerHTML += songHTML;
+            })
+        })
+
+</script>
 </body>
 </html>

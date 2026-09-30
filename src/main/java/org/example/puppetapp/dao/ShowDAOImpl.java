@@ -33,4 +33,14 @@ public class ShowDAOImpl implements ShowDAO {
 
         return query.getResultList();
     }
+
+    public Show findNextShow(){
+
+        TypedQuery<Show> query = entityManager.createQuery("SELECT s FROM Show s WHERE s.date >= CURRENT_DATE ORDER BY s.date ASC",
+                Show.class);
+
+        query.setMaxResults(1);
+
+        return query.getSingleResult();
+    }
 }

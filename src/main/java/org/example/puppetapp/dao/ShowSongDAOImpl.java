@@ -3,7 +3,6 @@ package org.example.puppetapp.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.example.puppetapp.entity.ShowSong;
-import org.example.puppetapp.entity.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +14,7 @@ public class ShowSongDAOImpl implements ShowSongDAO {
     private final EntityManager entityManager;
 
     @Autowired
-    public ShowSongDAOImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    public ShowSongDAOImpl(EntityManager entityManager) {this.entityManager = entityManager;}
 
     public List<ShowSong> getShowSongs(int show_id) {
 

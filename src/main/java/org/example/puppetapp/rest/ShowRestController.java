@@ -29,11 +29,11 @@ public class ShowRestController {
         return showDAO.getAllShows();
     }
 
-    @GetMapping("/puppetmaster/show/{showid}")
-    public ShowResponse getShowById(@PathVariable int showid) {
-        Show show = showDAO.getShowById(showid);
+    @GetMapping("/puppetmaster/show/{showId}")
+    public ShowResponse getShowById(@PathVariable int showId) {
+        Show show = showDAO.getShowById(showId);
 
-        List<ShowSong> showSongs = showSongDAO.getShowSongs(showid);
+        List<ShowSong> showSongs = showSongDAO.getShowSongs(showId);
 
         List<Song> songs = new ArrayList<>();
 

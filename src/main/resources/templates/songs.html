@@ -14,15 +14,16 @@
         .then(response => response.json())
         .then(songs => {
             songs.forEach(song => {
-                document.getElementById("songs").innerHTML += `
-                    <h2>${song.originalSongName}</h2>
-                    <p>${song.songName}</p>
-                    <p>${song.lightType}</p>
-                `;
+
+                let songHTML = `<div class="Song"><h2>${song.songName}</h2>`
+
+                songHTML += `<div>${song.originalSongName}</div><div>${song.lightType}</div>`
+                songHTML += `</div>`;
+
+                document.getElementById("songs").innerHTML += songHTML;
             });
         });
 </script>
-<h1 id = "song"></h1>
 
 </body>
 
