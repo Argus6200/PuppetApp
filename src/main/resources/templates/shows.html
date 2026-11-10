@@ -9,11 +9,45 @@
 
 <div id="shows"></div>
 
+<div id="addShowModal" class="modal">
+
+    <div class="modal-content">
+
+        <span id="closeAddShowModal">&times;</span>
+
+        <h2>Add Show</h2>
+
+        <form id="addShowForm">
+
+            <label for="location">Location</label>
+            <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    required
+            >
+
+            <label for="date">Date</label>
+            <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    required
+            >
+
+            <button type="submit">Create Show</button>
+
+        </form>
+
+    </div>
+
+</div>
+
 <script>
     fetch('/api/puppetmaster/shows')
         .then(response => response.json())
         .then(shows => {
-            console.log(shows);
+            //console.log(shows);
             shows.forEach(show => {
                 document.getElementById("shows").innerHTML += `
                     <a href="/puppetmaster/show/${show.id}"><h2>${show.location}</h2></a>
@@ -21,7 +55,25 @@
                 `;
             });
         });
+    const addShowForm = document.getElementById("addShowForm");
+    addShowForm.addEventListener("submit", (event) => {
+        console.log(document.getElementById("location").value);
+        console.log(document.getElementById("date").value);
+        event.preventDefault();
+        fetch("/api/puppetmaster/shows",
+            { method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    location: document.getElementById("location").value,
+                    date: document.getElementById("date").value
+                })
+            })
+            .then(response => response.json())
+    });
 </script>
+
+
+
+
 </body>
 <footer><a href = "http://localhost:8080/puppetmaster">Home</a></footer>
 </html>

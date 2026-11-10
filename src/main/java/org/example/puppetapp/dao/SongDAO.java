@@ -7,7 +7,7 @@ import java.util.List;
 public interface SongDAO {
 
     //Method for saving/creating objects using JPA
-    void save(Song theSong);
+    Song addSong(Song theSong);
 
     //creating the method for querying objects using JPA
     Song findById(Integer id);

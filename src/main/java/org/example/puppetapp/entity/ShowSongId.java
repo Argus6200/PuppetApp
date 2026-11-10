@@ -3,9 +3,15 @@ package org.example.puppetapp.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Embeddable
 @EqualsAndHashCode
+@Getter
+@Setter
+@NoArgsConstructor
 public class ShowSongId {
 
     @Column(name = "show_id")

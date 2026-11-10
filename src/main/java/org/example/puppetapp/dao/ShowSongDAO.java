@@ -8,5 +8,7 @@ public interface ShowSongDAO {
 
     List<ShowSong> getShowSongs(int showId);
 
+    void addShowSong(ShowSong showSong);
+
 
 }

@@ -144,7 +144,7 @@ public class PuppetAppApplication {
 
         Song tempSong = new Song("His love will go on","My heart will go on", "Spotlight");
 
-        songDAO.save(tempSong);
+        songDAO.addSong(tempSong);
 
         System.out.println(tempSong);
 

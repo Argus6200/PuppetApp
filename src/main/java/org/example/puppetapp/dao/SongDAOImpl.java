@@ -22,8 +22,9 @@ public class SongDAOImpl implements SongDAO{
     // svaes theSong to the Song table
     @Override
     @Transactional
-    public void save(Song theSong) {
+    public Song addSong(Song theSong) {
         entityManager.persist(theSong);
+        return theSong;
     }
 
     //queries the Song table for the ID and returns the Song object

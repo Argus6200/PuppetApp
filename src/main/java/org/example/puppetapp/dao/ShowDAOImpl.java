@@ -2,6 +2,7 @@ package org.example.puppetapp.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.example.puppetapp.entity.Show;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,7 @@ public class ShowDAOImpl implements ShowDAO {
     }
 
     public List<Show> getAllShows() {
-        TypedQuery<Show> query = entityManager.createQuery("FROM Show", Show.class);
+        TypedQuery<Show> query = entityManager.createQuery("FROM Show s ORDER BY s.date DESC", Show.class);
 
         return query.getResultList();
     }
@@ -37,5 +38,9 @@ public class ShowDAOImpl implements ShowDAO {
         query.setMaxResults(1);
 
         return query.getSingleResult();
+    }
+
+    public void AddShow(Show show){
+        entityManager.persist(show);
     }
 }

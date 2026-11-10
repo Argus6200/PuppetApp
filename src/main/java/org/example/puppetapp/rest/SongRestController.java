@@ -1,27 +1,33 @@
 package org.example.puppetapp.rest;
 
+import jakarta.transaction.Transactional;
 import org.example.puppetapp.dao.SongDAO;
 import org.example.puppetapp.entity.Song;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api")
+@RequestMapping("/api/puppetmaster")
 @RestController
 public class SongRestController {
 
-    private final SongDAO SongDAO;
+    private final SongDAO songDAO;
 
     public SongRestController(SongDAO SongDAO){
-        this.SongDAO = SongDAO;
+        this.songDAO = SongDAO;
     }
 
-    @GetMapping("/puppetmaster/songs")
+    @GetMapping("/songs")
     public List<Song> getSongs(){
 
-        return SongDAO.findAll();
+        return songDAO.findAll();
+    }
+
+    @PostMapping("/songs")
+    @Transactional
+    public Song addSong(@RequestBody Song song) {
+        songDAO.addSong(song);
+        return song;
     }
 
 }

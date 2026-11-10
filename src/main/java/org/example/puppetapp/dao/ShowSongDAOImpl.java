@@ -25,4 +25,7 @@ public class ShowSongDAOImpl implements ShowSongDAO {
         return theQuery.getResultList();
     }
 
+    public void addShowSong(ShowSong showSong){
+        entityManager.persist(showSong);
+    }
 }

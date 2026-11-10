@@ -3,26 +3,343 @@
 <head>
     <title>Show</title>
 </head>
+
 <body>
 
-<h1 id = "showH"></h1>
+<h1 id="showH">Show Details</h1>
 
 <div id="show"></div>
+
+<h2>Songs</h2>
 <div id="song"></div>
 
+<hr>
+
+<h2>Manage Songs</h2>
+
+<label for="songAction">What would you like to do?</label>
+
+<select id="songAction">
+    <option value="">Select an action</option>
+    <option value="existing">Add an Existing Song</option>
+    <option value="new">Create a New Song</option>
+</select>
+
+
+<!-- Add Existing Song -->
+<div id="existingSongSection" hidden>
+
+    <h3>Add Existing Song</h3>
+
+    <form id="addExistingSongForm">
+
+        <label for="selectedSong">Select Song</label>
+        <select id="selectedSong" required>
+            <option value="">Choose a Song</option>
+        </select>
+
+        <br><br>
+
+        <label for="existingOrder">Song Order</label>
+        <input
+                type="number"
+                id="existingOrder"
+                min="1"
+                required
+        >
+
+        <br><br>
+
+        <button type="submit">Add Song to Show</button>
+
+    </form>
+
+</div>
+
+
+<!-- Create New Song -->
+<div id="newSongSection" hidden>
+
+    <h3>Create New Song</h3>
+
+    <form id="addNewSongForm">
+
+        <label for="songName">Song Name</label>
+        <input
+                type="text"
+                id="songName"
+                required
+        >
+
+        <br><br>
+
+        <label for="originalSongName">Original Song Name</label>
+        <input
+                type="text"
+                id="originalSongName"
+                required
+        >
+
+        <br><br>
+
+        <label for="lightType">Light Type</label>
+        <input
+                type="text"
+                id="lightType"
+                required
+        >
+
+        <br><br>
+
+        <label for="newSongOrder">Song Order</label>
+        <input
+                type="number"
+                id="newSongOrder"
+                min="1"
+                required
+        >
+
+        <br><br>
+
+        <button type="submit">Create Song and Add to Show</button>
+
+    </form>
+
+</div>
+
+
 <script>
-    fetch(`/api${window.location.pathname}`)
-        .then(response => response.json())
-        .then(showResponse => {document.getElementById("show").innerHTML += `
-        <p>${showResponse.show.location}</p>
-        <p>${showResponse.show.date}</p>`;
-            showResponse.songs.forEach(song => document.getElementById("song").innerHTML += `
-            <p>${song.songName}</p>`)
-        })
-    ;
+
+    // Get the ID of the Show currently being viewed
+    const showId = Number(window.location.pathname.split("/").pop());
+
+
+    // Display the current Show and its Songs
+    function loadShow() {
+
+        fetch(`/api${window.location.pathname}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to retrieve Show");
+                }
+
+                return response.json();
+            })
+            .then(showResponse => {
+
+                document.getElementById("showH").textContent =
+                    showResponse.show.location;
+
+                document.getElementById("show").innerHTML = `
+                <p>Location: ${showResponse.show.location}</p>
+                <p>Date: ${showResponse.show.date}</p>
+            `;
+
+                const songContainer = document.getElementById("song");
+                songContainer.innerHTML = "";
+
+                showResponse.songs.forEach(song => {
+
+                    const songElement = document.createElement("p");
+                    songElement.textContent = song.songName;
+
+                    songContainer.appendChild(songElement);
+
+                });
+
+            })
+            .catch(error => console.error(error));
+
+    }
+
+
+    // Retrieve all existing Songs and populate the dropdown
+    function loadSongs() {
+
+        fetch("/api/puppetmaster/songs")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to retrieve Songs");
+                }
+
+                return response.json();
+            })
+            .then(songs => {
+
+                const selectedSong =
+                    document.getElementById("selectedSong");
+
+                // Clear previous options
+                selectedSong.innerHTML =
+                    '<option value="">Choose a Song</option>';
+
+                songs.forEach(song => {
+
+                    const option = document.createElement("option");
+
+                    option.value = song.id;
+                    option.textContent = song.songName;
+
+                    selectedSong.appendChild(option);
+
+                });
+
+            })
+            .catch(error => console.error(error));
+
+    }
+
+
+    // Show the appropriate form based on the user's selection
+    document.getElementById("songAction")
+        .addEventListener("change", event => {
+
+            const action = event.target.value;
+
+            document.getElementById("existingSongSection").hidden =
+                action !== "existing";
+
+            document.getElementById("newSongSection").hidden =
+                action !== "new";
+
+        });
+
+
+    // Associate an existing Song with the current Show
+    document.getElementById("addExistingSongForm")
+        .addEventListener("submit", event => {
+
+            event.preventDefault();
+
+            const songId =
+                Number(document.getElementById("selectedSong").value);
+
+            const order =
+                Number(document.getElementById("existingOrder").value);
+
+            fetch("/api/puppetmaster/ShowSong", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    showId: showId,
+                    songId: songId,
+                    order: order
+                })
+
+            })
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error("Failed to add Song to Show");
+                    }
+
+                    window.location.reload();
+
+                })
+                .catch(error => console.error(error));
+
+        });
+
+
+    // Create a new Song, then associate it with the current Show
+    document.getElementById("addNewSongForm")
+        .addEventListener("submit", event => {
+
+            event.preventDefault();
+
+            const song = {
+
+                songName:
+                document.getElementById("songName").value,
+
+                originalSongName:
+                document.getElementById("originalSongName").value,
+
+                lightType:
+                document.getElementById("lightType").value
+
+            };
+
+            const order =
+                Number(document.getElementById("newSongOrder").value);
+
+
+            // First: Create the Song
+            fetch("/api/puppetmaster/songs", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(song)
+
+            })
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error("Failed to create Song");
+                    }
+
+                    // The API must return the newly created Song,
+                    // including its generated database ID.
+                    return response.json();
+
+                })
+                .then(createdSong => {
+
+                    // Second: Associate the newly created Song with this Show
+                    return fetch("/api/puppetmaster/ShowSong", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            showId: showId,
+                            songId: createdSong.id,
+                            order: order
+
+                        })
+
+                    });
+
+                })
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error(
+                            "Song was created, but could not be added to Show"
+                        );
+                    }
+
+                    window.location.reload();
+
+                })
+                .catch(error => console.error(error));
+
+        });
+
+
+    // Initial page loading
+    loadShow();
+    loadSongs();
+
 </script>
 
 </body>
 
-<footer><a href = "http://localhost:8080/puppetmaster/shows">Back</a></footer>
+<footer>
+    <a href="/puppetmaster/shows">Back to Shows</a>
+</footer>
+
 </html>

@@ -1,5 +1,6 @@
 package org.example.puppetapp.Service;
 
+import jakarta.transaction.Transactional;
 import org.example.puppetapp.dao.ShowDAO;
 import org.example.puppetapp.dao.ShowSongDAO;
 import org.example.puppetapp.dto.ShowResponse;
@@ -38,6 +39,11 @@ public class ShowService {
 
     public List<Show> getShowsPage(){
         return showDAO.getAllShows();
+    }
+
+    @Transactional
+    public void AddShow(Show show){
+        showDAO.AddShow(show);
     }
 
 }

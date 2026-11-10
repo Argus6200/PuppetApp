@@ -17,11 +17,13 @@ public class PartAssignmentDAOImpl implements PartAssignmentDAO {
     @Autowired
     public PartAssignmentDAOImpl(EntityManager entityManager) {this.entityManager = entityManager;}
 
+    //finds part assignment by id.
     @Override
     public PartAssignment findPAById(PartAssignmentId id) {
         return entityManager.find(PartAssignment.class, id);
     }
 
+    //finds the parts that a person is in for the next show.
     @Override
     public List<PartAssignment> findPartAssignmentByShowAndPerformerId(int showId, int performerId) {
 

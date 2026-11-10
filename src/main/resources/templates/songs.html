@@ -7,25 +7,88 @@
 
 <h1>Songs</h1>
 
+<!-- Form to Add a New Song -->
+<h2>Add a New Song</h2>
+<form id="addSongForm">
+    <label for="songName">Song Name</label>
+    <input type="text" id="songName" required>
+    <br><br>
+
+    <label for="originalSongName">Original Song Name</label>
+    <input type="text" id="originalSongName" required>
+    <br><br>
+
+    <label for="lightType">Light Type</label>
+    <input type="text" id="lightType" required>
+    <br><br>
+
+    <button type="submit">Add Song</button>
+</form>
+
+<hr>
+
+<h2>All Songs</h2>
 <div id="songs"></div>
 
 <script>
-    fetch('/api/puppetmaster/songs')
-        .then(response => response.json())
-        .then(songs => {
-            songs.forEach(song => {
+    // Fetch and display existing songs
+    function loadSongs() {
+        fetch('/api/puppetmaster/songs')
+            .then(response => response.json())
+            .then(songs => {
+                const songsContainer = document.getElementById("songs");
+                songsContainer.innerHTML = ""; // Clear existing before populating
 
-                let songHTML = `<div class="Song"><h2>${song.songName}</h2>`
+                songs.forEach(song => {
+                    let songHTML = `<div class="Song"><h3>${song.songName}</h3>`;
+                    songHTML += `<div class="ogSongName">Original: ${song.originalSongName}</div>`;
+                    songHTML += `<div class="lightType">Light Type: ${song.lightType}</div>`;
+                    songHTML += `</div><br>`;
 
-                songHTML += `<div>${song.originalSongName}</div><div>${song.lightType}</div>`
-                songHTML += `</div>`;
+                    songsContainer.innerHTML += songHTML;
+                });
+            })
+            .catch(error => console.error("Error fetching songs:", error));
+    }
 
-                document.getElementById("songs").innerHTML += songHTML;
-            });
-        });
+    // Handle the submission of the new song form
+    document.getElementById("addSongForm").addEventListener("submit", event => {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        const newSong = {
+            songName: document.getElementById("songName").value,
+            originalSongName: document.getElementById("originalSongName").value,
+            lightType: document.getElementById("lightType").value
+        };
+
+        fetch('/api/puppetmaster/songs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newSong)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to add new song");
+                }
+                // Clear the form fields
+                document.getElementById("addSongForm").reset();
+
+                // Reload the song list so the new song appears immediately
+                loadSongs();
+            })
+            .catch(error => console.error("Error creating song:", error));
+    });
+
+    // Initial page load
+    loadSongs();
 </script>
 
 </body>
 
-<footer><a href = "http://localhost:8080/puppetmaster">Back Home</a></footer>
+<footer>
+    <br>
+    <a href="http://localhost:8080/puppetmaster">Back Home</a>
+</footer>
 </html>

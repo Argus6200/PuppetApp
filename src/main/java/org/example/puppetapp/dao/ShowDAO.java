@@ -11,4 +11,6 @@ public interface ShowDAO {
     List<Show> getAllShows();
 
     Show findNextShow();
+
+    void AddShow(Show show);
 }

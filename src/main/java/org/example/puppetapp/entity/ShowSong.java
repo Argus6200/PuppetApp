@@ -20,10 +20,10 @@ public class ShowSong {
     @ManyToOne
     @MapsId("songId")
     @JoinColumn(name = "song_id")
-    Song song;
+    private Song song;
 
     @ManyToOne
     @MapsId("showId")
     @JoinColumn(name = "show_id")
-    Show show;
+    private Show show;
 }

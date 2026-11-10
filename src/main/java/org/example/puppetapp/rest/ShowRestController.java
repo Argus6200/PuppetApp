@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/puppetmaster")
 public class ShowRestController {
 
     private final ShowService showService;
@@ -17,13 +17,18 @@ public class ShowRestController {
         this.showService = showService;
     }
 
-    @GetMapping("/puppetmaster/shows")
+    @GetMapping("/shows")
     public List<Show> getShows() {
         return showService.getShowsPage();
     }
 
-    @GetMapping("/puppetmaster/show/{showId}")
+    @GetMapping("/show/{showId}")
     public ShowResponse getShowById(@PathVariable int showId) {
         return showService.getShowPage(showId);
+    }
+
+    @PostMapping("/shows")
+    public void AddShow(@RequestBody Show show){
+        showService.AddShow(show);
     }
 }

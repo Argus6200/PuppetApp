@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface PartAssignmentDAO {
 
+   //Finding part assignment by id
    PartAssignment findPAById(PartAssignmentId id);
+
+   //finds the list of assignments that the performer is in.
    List<PartAssignment> findPartAssignmentByShowAndPerformerId(int pAId, int pId);
 }
